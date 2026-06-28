@@ -1,6 +1,8 @@
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { config as loadDotenv } from "dotenv";
 import { Worker } from "bullmq";
 import { createAIService } from "@genie/ai";
 import { defaultModelRouting, loadEnv, parseModelRef, type PullRequestRef } from "@genie/config";
@@ -17,6 +19,10 @@ import { checkoutPrHead } from "./checkout.js";
 import { createUploader } from "./uploader.js";
 import { DbRoutingStore } from "./routingStore.js";
 import { ensureRepo, recordRun } from "./persist.js";
+
+// `pnpm dev` runs this from apps/worker, so load the monorepo-root .env explicitly
+// (a bare `dotenv/config` would only look in the app's own directory).
+loadDotenv({ path: fileURLToPath(new URL("../../../.env", import.meta.url)) });
 
 const env = loadEnv();
 const connection = createRedis();

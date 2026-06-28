@@ -1,7 +1,13 @@
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { config as loadDotenv } from "dotenv";
 import { Server, Probot } from "probot";
 import { loadEnv } from "@genie/config";
 import { genieApp } from "./app.js";
+
+// `pnpm dev` runs this from apps/server, so load the monorepo-root .env explicitly
+// (a bare `dotenv/config` would only look in the app's own directory).
+loadDotenv({ path: fileURLToPath(new URL("../../../.env", import.meta.url)) });
 
 const env = loadEnv();
 

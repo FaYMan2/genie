@@ -9,6 +9,10 @@ coverage/
 .env.local
 *.local
 
+# next.js
+.next/
+*.tsbuildinfo
+
 # generated
 packages/db/src/generated/
 **/playwright-report/

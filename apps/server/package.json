@@ -12,6 +12,7 @@
   "dependencies": {
     "@genie/config": "workspace:*",
     "@genie/queue": "workspace:*",
+    "dotenv": "^16.4.7",
     "probot": "^13.4.4"
   },
   "devDependencies": {
