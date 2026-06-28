@@ -13,12 +13,18 @@ export async function setGlobalRouting(formData: FormData): Promise<void> {
   const task = String(formData.get("task")) as TaskKind;
   const modelRef = String(formData.get("modelRef")).trim();
   if (!TASK_KINDS.includes(task)) throw new Error(`Unknown task ${task}`);
-  parseModelRef(modelRef); // validate "provider:model" before persisting
+  parseModelRef(modelRef);
 
-  await prisma.routingRule.upsert({
-    where: { task_installationId_repoId: { task, installationId: null, repoId: null } },
-    create: { task, modelRef, installationId: null, repoId: null },
-    update: { modelRef },
+
+  const existing = await prisma.routingRule.findFirst({
+    where: { task, installationId: null, repoId: null },
   });
+  if (existing) {
+    await prisma.routingRule.update({ where: { id: existing.id }, data: { modelRef } });
+  } else {
+    await prisma.routingRule.create({
+      data: { task, modelRef, installationId: null, repoId: null },
+    });
+  }
   revalidatePath("/");
 }
