@@ -17,7 +17,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           color: "#111",
         }}
       >
-        <h1>🧞 Genie Admin</h1>
+        <h1 style={{ marginBottom: 4 }}>🧞 Genie Admin</h1>
+        <p style={{ marginTop: 0, color: "#777", fontSize: 14 }}>
+          Configure model routing and review recent demo runs.
+        </p>
         {children}
       </body>
     </html>

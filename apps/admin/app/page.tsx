@@ -1,6 +1,7 @@
 import { TASK_KINDS, defaultModelRouting } from "@genie/config";
 import { prisma } from "@genie/db";
 import { setGlobalRouting } from "./actions.js";
+import { HelpPanel } from "./HelpPanel.js";
 
 export const dynamic = "force-dynamic";
 
@@ -24,6 +25,7 @@ export default async function Dashboard() {
           provider is <code>anthropic</code> or <code>gemini</code>. Empty falls back to the
           env default.
         </p>
+        <HelpPanel />
         {TASK_KINDS.map((task) => (
           <form
             key={task}
